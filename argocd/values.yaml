@@ -188,17 +188,18 @@ configs:
     statusbadge.enabled: false
 
     # Dex configuration
-    # dex.config: |
-    #   connectors:
-    #     # GitHub example
-    #     - type: github
-    #       id: github
-    #       name: GitHub
-    #       config:
-    #         clientID: aabbccddeeff00112233
-    #         clientSecret: $dex.github.clientSecret # Alternatively $<some_K8S_secret>:dex.github.clientSecret
-    #         orgs:
-    #         - name: your-github-org
+    dex.config: |
+      connectors:
+        # GitHub example
+        - type: github
+          id: github
+          name: GitHub
+          config:
+            clientID: Ov23liwPkRRf0UeAyG9w
+            # clientSecret: $dex.github.clientSecret # Alternatively $<some_K8S_secret>:dex.github.clientSecret
+            clientSecret: $sso-secret:clientSecret
+            orgs:
+            - name: hot-spicy-buffalo-wing
 
     # OIDC configuration as an alternative to dex (optional).
     # oidc.config: |
@@ -294,22 +295,24 @@ configs:
 
     # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
     # If omitted or empty, users may be still be able to login, but will see no apps, projects, etc...
-    policy.default: ''
+    policy.default: 'role:readonly'
 
     # -- File containing user-defined policies and role definitions.
     # @default -- `''` (See [values.yaml])
-    policy.csv: ''
+    # policy.csv: ''
     # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
     #  g, subject, inherited-subject
-    # policy.csv: |
-    #   p, role:org-admin, applications, *, */*, allow
-    #   p, role:org-admin, clusters, get, *, allow
-    #   p, role:org-admin, repositories, *, *, allow
-    #   p, role:org-admin, logs, get, *, allow
-    #   p, role:org-admin, exec, create, */*, allow
-    #   g, your-github-org:your-team, role:org-admin
+    policy.csv: |
+      p, role:org-admin, applications, *, */*, allow
+      p, role:org-admin, clusters, get, *, allow
+      p, role:org-admin, repositories, *, *, allow
+      p, role:org-admin, logs, get, *, allow
+      p, role:org-admin, exec, create, */*, allow
+
+      g, hot-spicy-buffalo-wing:infra, role:org-admin
+      g, hot-spicy-buffalo-wing:developer, role:readonly
 
     # -- OIDC scopes to examine during rbac enforcement (in addition to `sub` scope).
     # The scope value can be a string, or a list of strings.
