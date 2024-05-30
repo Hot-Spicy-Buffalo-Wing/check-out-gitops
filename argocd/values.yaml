@@ -42,7 +42,7 @@ crds:
 global:
   # -- Default domain used by all components
   ## Used for ingresses, certificates, SSO, notifications, etc.
-  domain: argocd.example.com
+  domain: argo.check-out.paperst.ar
 
   # -- Common labels for the all resources
   additionalLabels: {}
@@ -2163,7 +2163,11 @@ server:
     # -- Enable TLS configuration for the hostname defined at `server.ingress.hostname`
     ## TLS certificate will be retrieved from a TLS secret `argocd-server-tls`
     ## You can create this secret via `certificate` or `certificateSecret` option
-    tls: false
+    tls:
+      - hosts:
+        - argo.check-out.paperst.ar
+        secretName: argo-checkout
+
 
     # -- The list of additional hostnames to be covered by ingress record
     # @default -- `[]` (See [values.yaml])
@@ -2199,10 +2203,10 @@ server:
 
     # -- Additional TLS configuration
     # @default -- `[]` (See [values.yaml])
-    extraTls:
-      - hosts:
-        - argo.check-out.paperst.ar
-        secretName: argo-checkout
+    extraTls: []
+      # - hosts:
+      #   - argo.check-out.paperst.ar
+      #   secretName: argo-checkout
 
     # AWS specific options for Application Load Balancer
     # Applies only when `serv.ingress.controller` is set to `aws`
