@@ -2168,7 +2168,7 @@ server:
     # -- The list of additional hostnames to be covered by ingress record
     # @default -- `[]` (See [values.yaml])
     extraHosts: 
-      - name: argocd.check-out.paperst.ar
+      - name: argo.check-out.paperst.ar
         path: /
 
     # -- Additional ingress paths
