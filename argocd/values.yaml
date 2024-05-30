@@ -245,7 +245,7 @@ configs:
     ## Server properties
     # -- Run server without TLS
     ## NOTE: This value should be set when you generate params by other means as it changes ports used by ingress template.
-    server.insecure: false
+    server.insecure: true
     # -- Value for base href in index.html. Used if Argo CD is running behind reverse proxy under subpath different from /
     server.basehref: /
     # -- Used if Argo CD is running behind reverse proxy under subpath different from /
@@ -2144,11 +2144,10 @@ server:
     # -- Additional ingress annotations
     ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-1-ssl-passthrough
     annotations:
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      traefik.ingress.kubernetes.io/router.tls: "true"
 
     # -- Defines which ingress controller will implement the resource
-    ingressClassName: ""
+    ingressClassName: "traefik"
 
     # -- Argo CD server hostname
     # @default -- `""` (defaults to global.domain)
@@ -2163,17 +2162,14 @@ server:
     # -- Enable TLS configuration for the hostname defined at `server.ingress.hostname`
     ## TLS certificate will be retrieved from a TLS secret `argocd-server-tls`
     ## You can create this secret via `certificate` or `certificateSecret` option
-    tls:
-      - hosts:
-        - argo.check-out.paperst.ar
-        secretName: argo-checkout
+    tls: false
 
 
     # -- The list of additional hostnames to be covered by ingress record
     # @default -- `[]` (See [values.yaml])
-    extraHosts: 
-      - name: argo.check-out.paperst.ar
-        path: /
+    extraHosts: []
+      # - name: argo.check-out.paperst.ar
+      #   path: /
 
     # -- Additional ingress paths
     # @default -- `[]` (See [values.yaml])
@@ -2203,10 +2199,10 @@ server:
 
     # -- Additional TLS configuration
     # @default -- `[]` (See [values.yaml])
-    extraTls: []
+    extraTls:
       # - hosts:
       #   - argo.check-out.paperst.ar
-      #   secretName: argo-checkout
+      - secretName: argo-checkout
 
     # AWS specific options for Application Load Balancer
     # Applies only when `serv.ingress.controller` is set to `aws`
