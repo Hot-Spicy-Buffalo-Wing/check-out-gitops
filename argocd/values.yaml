@@ -187,6 +187,7 @@ configs:
     ## Ref: https://argo-cd.readthedocs.io/en/stable/user-guide/status-badge/
     statusbadge.enabled: false
 
+    url: https://argo.check-out.paperst.ar
     # Dex configuration
     dex.config: |
       connectors:
