@@ -3,12 +3,22 @@ kind: Application
 metadata:
   name: check-out
   namespace: check-out
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: git@github.com:hot-spicy-buffalo-wing/check-out.git
-    path: /applications/check-out
+    path: applications/check-out
+    targetRevision: HEAD
+    directory:
+      jsonnet: {}
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: check-out
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
   
