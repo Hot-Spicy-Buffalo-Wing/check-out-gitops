@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:hot-spicy-buffalo-wing/check-out.git
+    repoURL: git@github.com:hot-spicy-buffalo-wing/check-out-gitops.git
     path: applications/check-out
     targetRevision: HEAD
     directory:
