@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: check-out-stg-be
+  namespace: check-out
+  labels:
+    name: check-out-stg-be
+    env: stg
+spec:
+  type: ClusterIP
+  selector:
+    name: check-out-stg-be
+    env: stg
+  ports:
+  - port: 80
+    targetPort: 3000
+    name: http
+    protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: check-out-stg-be
+  namespace: check-out
+  labels:
+    name: check-out-stg-be
+    env: stg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: check-out-stg-be
+      env: stg
+  template:
+    metadata:
+      labels:
+        name: check-out-stg-be
+        env: stg
+    spec:
+      containers:
+      - name: check-out-stg-be
+        image: ubuntu:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
