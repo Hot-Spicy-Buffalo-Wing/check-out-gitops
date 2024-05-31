@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infra
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:hot-spicy-buffalo-wing/check-out-gitops.git
+    path: applications/infra
+    targetRevision: HEAD
+    directory:
+      jsonnet: {}
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: check-out
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+  
