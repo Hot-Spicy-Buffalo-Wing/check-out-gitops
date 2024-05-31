@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: check-out
-  namespace: check-out
+  namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
