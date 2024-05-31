@@ -196,11 +196,12 @@ configs:
           id: github
           name: GitHub
           config:
+            loadAllGroups: true
             clientID: Ov23liwPkRRf0UeAyG9w
             # clientSecret: $dex.github.clientSecret # Alternatively $<some_K8S_secret>:dex.github.clientSecret
             clientSecret: $sso-secret:clientSecret
             orgs:
-            - name: hot-spicy-buffalo-wing
+            - name: Hot-Spicy-Buffalo-Wing
 
     # OIDC configuration as an alternative to dex (optional).
     # oidc.config: |
