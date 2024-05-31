@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
       - name: check-out-stg-be
-        image: crccheck/hello-world
+        image: nginxdemos/hello
         ports:
         - containerPort: 8000
         resources:
