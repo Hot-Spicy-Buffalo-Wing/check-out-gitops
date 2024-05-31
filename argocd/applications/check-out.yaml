@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: check-out
+  namespace: check-out
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:hot-spicy-buffalo-wing/check-out.git
+    path: /applications/check-out
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: check-out
+  
