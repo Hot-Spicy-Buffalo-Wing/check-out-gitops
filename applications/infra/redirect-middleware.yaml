@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: check-out-redirect-middleware
+  namespace: check-out
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
