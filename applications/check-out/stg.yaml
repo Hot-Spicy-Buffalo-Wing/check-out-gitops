@@ -13,7 +13,7 @@ spec:
     env: stg
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 3000
     name: http
     protocol: TCP
 ---
@@ -26,14 +26,14 @@ metadata:
     name: check-out-stg-be
     env: stg
 spec:
-  replicas: 5
+  replicas: 3
   revisionHistoryLimit: 1
   minReadySeconds: 7
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 0
-      maxSurge: 1
+      maxSurge: 2
   selector:
     matchLabels:
       name: check-out-stg-be
@@ -46,9 +46,9 @@ spec:
     spec:
       containers:
       - name: check-out-stg-be
-        image: ealen/echo-server:latest
+        image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-backend:dev7
         ports:
-        - containerPort: 80
+        - containerPort: 3000
         resources:
           requests:
             cpu: 50m
