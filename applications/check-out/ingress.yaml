@@ -22,3 +22,25 @@ spec:
               number: 80
   tls:
   - secretName: api-check-out-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: check-out-minio-ingress
+  labels:
+    name: check-out-minio-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  rules:
+  - host: minio.check-out.paperst.ar
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: minio
+            port: 
+              number: 9001
+
