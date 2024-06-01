@@ -5,8 +5,8 @@ metadata:
   namespace: check-out
 data:
   NAMESPACE_NAME: check-out
-  AWS_REGION: "ap-northeast-2" # Replace with your ECR region
-  DOCKER_SECRET_NAME: regcred # Replace with your desired ECR token secret name
+  AWS_REGION: ap-northeast-2
+  DOCKER_SECRET_NAME: regcred
 ---
 apiVersion: v1
 kind: ServiceAccount
