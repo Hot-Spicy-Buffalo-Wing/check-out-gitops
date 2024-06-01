@@ -63,6 +63,15 @@ spec:
       labels:
         app: minio
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - k3s-node-a
       containers:
       - name: minio
         image: minio/minio:latest
@@ -78,6 +87,7 @@ spec:
         ports:
         - containerPort: 9000
         - containerPort: 9001
-        volumeMounts:
-        - name: storage
-          mountPath: /storage
+        volumes:
+        - name: minio-pvc
+          persistentVolumeClaim:
+            claimName: minio-pvc
