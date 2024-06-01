@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: minio-pv
+  namespace: check-out
+  labels:
+    name: minio-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain # maintain data even PVC is released
+  hostPath:
+    path: "/mnt/minio"
+  claimRef:
+    namespace: check-out
+    name: minio-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+  namespace: check-out
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      name: minio-pv
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+spec:
+  selector:
+    app: minio
+  ports:
+  - port: 9000
+    name: minio
+  - port: 9001
+    name: ui
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - k3s-node-a
+      containers:
+      - name: minio
+        image: minio/minio:latest
+        command:
+        - /bin/bash
+        - -c
+        args:
+        - minio server --console-address :9001 /storage
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 9000
+        - containerPort: 9001
+        volumes:
+        - name: minio-pvc
+          persistentVolumeClaim:
+            claimName: minio-pvc
