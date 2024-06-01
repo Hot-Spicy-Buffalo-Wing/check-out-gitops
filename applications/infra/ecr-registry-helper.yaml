@@ -59,7 +59,7 @@ spec:
           serviceAccountName: sa-ecr-registry-helper
           containers:
           - name: ecr-registry-helper
-            image: omarxs/awskctl:v1.0
+            image: amazon/aws-cli
             envFrom:
             - secretRef:
                 name: ecr-secret
