@@ -1,4 +1,40 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: minio-pv
+  namespace: check-out
+  labels:
+    name: minio-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain # maintain data even PVC is released
+  hostPath:
+    path: "/mnt/minio"
+  claimRef:
+    namespace: check-out
+    name: minio-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+  namespace: check-out
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      name: minio-pv
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: minio
@@ -7,7 +43,9 @@ spec:
     app: minio
   ports:
   - port: 9000
+    name: http
   - port: 9001
+    name: http
 ---
 apiVersion: apps/v1
 kind: Deployment
