@@ -49,6 +49,9 @@ spec:
         image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-backend:dev10
         ports:
           - containerPort: 3000
+        envFrom:
+          - secretRef:
+              name: backend-secret
         resources:
           requests:
             cpu: 50m
