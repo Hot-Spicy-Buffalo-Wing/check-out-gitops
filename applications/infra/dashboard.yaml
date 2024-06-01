@@ -4,7 +4,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
+  namespace: argocd
 spec:
   project: default
 
@@ -16,7 +16,7 @@ spec:
         releaseName: kubernetes-dashboard
 
   destination:
-    namespace: kubernetes-dashboard
+    namespace: argocd
     server: https://kubernetes.default.svc
 
   syncPolicy:
