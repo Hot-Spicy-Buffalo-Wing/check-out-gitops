@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
       - name: check-out-stg-be
-        image: ealen/echo-server
+        image: ealen/echo-server:latest
         ports:
         - containerPort: 80
         resources:
