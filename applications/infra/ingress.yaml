@@ -25,3 +25,31 @@ spec:
               number: 443
   tls:
   - secretName: dashboard-check-out-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: postgres-ingress
+  namespace: check-out
+  labels:
+    name: postgres-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/service.serversscheme: https
+    traefik.ingress.kubernetes.io/router.middlewares: check-out-check-out-redirect-middleware@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: postgres.check-out.paperst.ar
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: postgresql-svc
+            port: 
+              number: 5432
+  tls:
+  - secretName: dashboard-check-out-tls

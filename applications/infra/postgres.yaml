@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgresql-pv
+  namespace: check-out
+  labels:
+    name: postgresql-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: "/mnt/postgresql"
+  claimRef:
+    namespace: check-out
+    name: postgresql-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgresql-pvc
+  namespace: check-out
+spec:
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  selector:
+    matchLabels:
+      name: postgresql-pv
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql-app
+  namespace: check-out
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: postgresql-app
+  template:
+    metadata:
+      labels:
+        name: postgresql-app
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - k3s-node-a
+      containers:
+        - name: postgresql-app
+          image: postgres:16
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: postgresql-secret
+          volumeMounts:
+            - name: postgresql-app-pvc
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgresql-app-pvc
+          persistentVolumeClaim:
+            claimName: postgresql-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql-svc
+  namespace: check-out
+spec:
+  type: ClusterIP
+  selector:
+    name: postgresql-app
+  ports:
+    - port: 5432
+      targetPort: 5432
+      name: mysql
+      protocol: TCP
