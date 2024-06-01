@@ -69,6 +69,7 @@ spec:
             - /bin/sh
             - -c
             - |-
+              curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
               ECR_TOKEN="$(aws ecr get-login-password --region ${AWS_REGION})"
               kubectl delete secret --ignore-not-found $DOCKER_SECRET_NAME -n $NAMESPACE_NAME
               kubectl create secret docker-registry $DOCKER_SECRET_NAME \
