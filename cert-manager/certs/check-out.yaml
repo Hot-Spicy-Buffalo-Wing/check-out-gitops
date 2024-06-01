@@ -22,10 +22,10 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ai-api-check-out-tls
+  name: ai-check-out-tls
   namespace: cert-manager
 spec:
-  secretName: ai-api-check-out-tls
+  secretName: ai-check-out-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
