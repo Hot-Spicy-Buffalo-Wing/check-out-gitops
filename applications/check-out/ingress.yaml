@@ -75,10 +75,10 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: check-out-minio-ingress
+  name: check-out-minio-ui-ingress
   namespace: check-out
   labels:
-    name: check-out-minio-ingress
+    name: check-out-minio-ui-ingress
   annotations:
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
