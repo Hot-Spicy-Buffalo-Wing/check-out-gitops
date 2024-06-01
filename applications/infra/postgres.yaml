@@ -84,11 +84,11 @@ metadata:
   name: postgresql-svc
   namespace: check-out
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     name: postgresql-app
   ports:
     - port: 5432
       targetPort: 5432
       name: mysql
-      protocol: TCP
+      nodePort: 32432
