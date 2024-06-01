@@ -52,4 +52,4 @@ spec:
             port: 
               number: 5432
   tls:
-  - secretName: dashboard-check-out-tls
+  - secretName: postgres-tls
