@@ -26,7 +26,7 @@ metadata:
     name: check-out-stg-be
     env: stg
 spec:
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 1
   minReadySeconds: 7
   strategy:
