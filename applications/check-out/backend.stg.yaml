@@ -45,14 +45,16 @@ spec:
         env: stg
     spec:
       containers:
-        - name: check-out-stg-be
-          image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-ai:dev2
-          ports:
-            - containerPort: 3000
-          resources:
-            requests:
-              cpu: 50m
-              memory: 64Mi
-            limits:
-              cpu: 100m
-              memory: 256Mi
+      - name: check-out-stg-be
+        image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-ai:dev2
+        ports:
+          - containerPort: 3000
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+      imagePullSecrets:
+      - name: regcred
