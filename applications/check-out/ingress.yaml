@@ -5,6 +5,7 @@ metadata:
   namespace: check-out
   annotations:
     traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: check-out-check-out-redirect-middleware@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
