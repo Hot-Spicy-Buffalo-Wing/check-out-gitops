@@ -26,6 +26,31 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  name: check-out-stg-ai-be-ingress
+  namespace: check-out
+  annotations:
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: check-out-check-out-redirect-middleware@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: ai.check-out.paperst.ar
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: check-out-stg-ai
+            port: 
+              number: 80
+  tls:
+  - secretName: ai-check-out-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
   name: check-out-minio-ingress
   namespace: check-out
   labels:
