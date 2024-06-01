@@ -30,9 +30,9 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
     group: cert-manager.io
-  commonName: "api.check-out.paperst.ar"
+  commonName: "minio.check-out.paperst.ar"
   dnsNames:
-    - "api.check-out.paperst.ar"
+    - "minio.check-out.paperst.ar"
   secretTemplate:
     annotations:
       reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
