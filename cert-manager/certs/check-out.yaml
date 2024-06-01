@@ -39,3 +39,24 @@ spec:
       reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "check-out,default" # Control destination namespaces
       reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true" # Auto create reflection for matching namespaces
       reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "check-out" # Control auto-reflection namespaces
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: minio-dashboard-check-out-tls
+  namespace: cert-manager
+spec:
+  secretName: minio-dashboard-check-out-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+    group: cert-manager.io
+  commonName: "minio-dashboard.check-out.paperst.ar"
+  dnsNames:
+    - "minio-dashboard.check-out.paperst.ar"
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "check-out,default" # Control destination namespaces
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true" # Auto create reflection for matching namespaces
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "check-out" # Control auto-reflection namespaces
