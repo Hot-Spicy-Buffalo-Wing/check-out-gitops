@@ -43,4 +43,6 @@ spec:
             name: minio
             port: 
               number: 9001
+  tls:
+  - secretName: minio-check-out-tls
 
