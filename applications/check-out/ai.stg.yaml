@@ -49,6 +49,9 @@ spec:
         image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-ai:dev5
         ports:
           - containerPort: 8000
+        envFrom:
+          - secretRef:
+              name: ai-secret
         resources:
           requests:
             cpu: 50m
