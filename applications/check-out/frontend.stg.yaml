@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
       - name: check-out-stg-fe
-        image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-frontend:dev1
+        image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-frontend:dev2
         ports:
           - containerPort: 8501
         envFrom:
