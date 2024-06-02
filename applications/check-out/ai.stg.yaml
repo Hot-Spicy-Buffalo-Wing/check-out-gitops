@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
       - name: check-out-stg-ai
-        image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-ai:dev6
+        image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-ai:dev7
         ports:
           - containerPort: 8000
         envFrom:
