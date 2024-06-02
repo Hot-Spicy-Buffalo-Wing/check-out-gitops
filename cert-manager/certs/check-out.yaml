@@ -43,10 +43,10 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: minio-check-out-tls
+  name: minio-bucket-check-out-tls
   namespace: cert-manager
 spec:
-  secretName: minio-check-out-tls
+  secretName: minio-bucket-check-out-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
