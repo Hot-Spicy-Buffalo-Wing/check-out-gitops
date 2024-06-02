@@ -97,7 +97,7 @@ spec:
         - minio server --console-address :9001 /storage
         resources:
           limits:
-            memory: "512Mi"
+            memory: "1024Mi"
             cpu: "500m"
         ports:
         - containerPort: 9000
