@@ -9,7 +9,7 @@ backend:
   tls: api-check-out-tls
 
 frontend:
-  image: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com/check-out-frontend:dev2
+  image: check-out-frontend:dev5
   port: 80
   replicas: 5
   strategy: RollingUpdate
