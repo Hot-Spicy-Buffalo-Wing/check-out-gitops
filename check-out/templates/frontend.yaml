@@ -1,5 +1,5 @@
 ---
-{{- $component_type := "backend" }}
+{{- $component_type := "frontend" }}
 {{- with (get .Values $component_type) }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
