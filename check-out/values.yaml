@@ -11,7 +11,7 @@ backend:
 frontend:
   image: check-out-frontend:dev3
   port: 80
-  replicas: 1
+  replicas: 5
   strategy: RollingUpdate
   host: check-out.paperst.ar
   tls: check-out-tls
