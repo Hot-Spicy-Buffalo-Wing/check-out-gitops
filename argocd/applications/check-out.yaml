@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,8 +8,15 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
+  sources:
+  - chart: check-out
     repoURL: git@github.com:hot-spicy-buffalo-wing/check-out-gitops.git
+    targetRevision: HEAD
+    helm:
+      releaseName: check-out
+      valueFiles:
+      - /check-out/values.yaml
+  - repoURL: git@github.com:hot-spicy-buffalo-wing/check-out-gitops.git
     path: applications/check-out
     targetRevision: HEAD
     directory:
@@ -21,4 +29,6 @@ spec:
     automated:
       prune: false
       selfHeal: true
-  
+---
+
+

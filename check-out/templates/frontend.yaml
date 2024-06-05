@@ -1,0 +1,89 @@
+---
+{{- $component_type := "backend" }}
+{{- with (get .Values $component_type) }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $.Release.Name }}-{{ $component_type }}-ingress
+  labels:
+    {{- include "common_labels" (list $ $component_type) | nindent 4 }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: check-out-check-out-redirect-middleware@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: {{ .host }}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: {{ $.Release.Name }}-{{ $component_type }}
+                port:
+                  number: 80
+  tls:
+    - secretName: {{ .tls }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Release.Name }}-{{ $component_type }}
+  labels:
+    {{- include "common_labels" (list $ $component_type) | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "common_labels" (list $ $component_type) | nindent 4 }}
+  ports:
+    - port: 80
+      targetPort: {{ .port }}
+      name: http
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Release.Name }}-{{ $component_type }}
+  labels:
+    {{- include "common_labels" (list $ $component_type) | nindent 4 }}
+spec:
+  replicas: {{ .replicas }}
+  revisionHistoryLimit: 1
+  minReadySeconds: 7
+{{- if eq .strategy "RollingUpdate" }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "common_labels" (list $ $component_type) | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "common_labels" (list $ $component_type) | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ $component_type }}
+        image: {{ $.Values.imageRepository }}/{{ .image }}
+        ports:
+          - containerPort: {{ .port }}
+        envFrom:
+          - secretRef:
+              name: {{ $component_type }}-secret
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+      imagePullSecrets:
+      - name: regcred
+---
+{{- end -}}

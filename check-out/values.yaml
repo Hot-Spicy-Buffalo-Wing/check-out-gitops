@@ -1,0 +1,25 @@
+imageRepository: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com
+
+backend:
+  image: check-out-backend
+  port: 3000
+  replicas: 3
+  strategy: RollingUpdate
+  host: api.check-out.paperst.ar
+  tls: api-check-out-tls
+
+frontend:
+  image: check-out-frontend
+  port: 8501
+  replicas: 1
+  strategy: RollingUpdate
+  host: check-out.paperst.ar
+  tls: check-out-tls
+
+ai:
+  image: check-out-ai
+  port: 8000
+  replicas: 3
+  strategy: RollingUpdate
+  host: ai.check-out.paperst.ar
+  tls: ai-check-out-tls
