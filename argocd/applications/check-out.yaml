@@ -9,14 +9,15 @@ metadata:
 spec:
   project: default
   sources:
-  - chart: check-out
+  - path: check-out
     repoURL: git@github.com:hot-spicy-buffalo-wing/check-out-gitops.git
     targetRevision: HEAD
     helm:
       releaseName: check-out
       valueFiles:
-      - /check-out/values.yaml
+      - $myRepo/check-out/values.yaml
   - repoURL: git@github.com:hot-spicy-buffalo-wing/check-out-gitops.git
+    ref: myRepo
     path: applications/check-out
     targetRevision: HEAD
     directory:
