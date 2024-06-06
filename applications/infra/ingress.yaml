@@ -22,9 +22,9 @@ spec:
   routes:
   - match: Host(`dashboard.check-out.paperst.ar`)
     kind: Rule
-    middlewares:
-    - name: check-out-redirect-middleware
-      namespace: check-out
+    # middlewares:
+    # - name: check-out-redirect-middleware
+    #   namespace: check-out
     services:
     - name: kubernetes-dashboard-kong-proxy
       port: 443
