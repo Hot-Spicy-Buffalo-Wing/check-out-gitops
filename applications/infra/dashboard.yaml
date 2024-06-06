@@ -16,7 +16,7 @@ spec:
         releaseName: kubernetes-dashboard
 
   destination:
-    namespace: argocd
+    namespace: kubernetes-dashboard
     server: https://kubernetes.default.svc
 
   syncPolicy:
