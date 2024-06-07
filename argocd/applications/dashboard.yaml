@@ -9,11 +9,17 @@ spec:
   project: default
 
   sources:
-    - chart: kubernetes-dashboard
-      repoURL: https://kubernetes.github.io/dashboard/
-      targetRevision: 7.4.0
-      helm:
-        releaseName: kubernetes-dashboard
+  - chart: kubernetes-dashboard
+    repoURL: https://kubernetes.github.io/dashboard/
+    targetRevision: 7.4.0
+    helm:
+      releaseName: kubernetes-dashboard
+  - repoURL: git@github.com:hot-spicy-buffalo-wing/check-out-gitops.git
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: applications/dashboard
+    targetRevision: HEAD
 
   destination:
     namespace: kubernetes-dashboard
