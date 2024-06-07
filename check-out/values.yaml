@@ -17,7 +17,7 @@ frontend:
   tls: check-out-tls
 
 ai:
-  image: check-out-ai:dev17
+  image: check-out-ai:dev18
   port: 8000
   replicas: 3
   strategy: RollingUpdate
