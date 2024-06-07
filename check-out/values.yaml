@@ -1,7 +1,7 @@
 imageRepository: 477213393195.dkr.ecr.ap-northeast-2.amazonaws.com
 
 backend:
-  image: check-out-backend:dev19
+  image: check-out-backend:dev21
   port: 3000
   replicas: 3
   strategy: RollingUpdate
