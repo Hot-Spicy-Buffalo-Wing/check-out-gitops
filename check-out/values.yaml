@@ -9,7 +9,7 @@ backend:
   tls: api-check-out-tls
 
 frontend:
-  image: check-out-frontend:dev34
+  image: check-out-frontend:dev35
   port: 80
   replicas: 5
   strategy: RollingUpdate
