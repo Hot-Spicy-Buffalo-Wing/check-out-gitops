@@ -187,6 +187,9 @@ configs:
     ## Ref: https://argo-cd.readthedocs.io/en/stable/user-guide/status-badge/
     statusbadge.enabled: false
 
+    accounts.readonly: login
+    accounts.readonly.enabled: "true"
+
     url: https://argo.check-out.paperst.ar
     # Dex configuration
     dex.config: |
@@ -315,6 +318,7 @@ configs:
 
       g, Hot-Spicy-Buffalo-Wing:infra, role:org-admin
       g, Hot-Spicy-Buffalo-Wing:developer, role:readonly
+      g, readonly, role:readonly
 
     # -- OIDC scopes to examine during rbac enforcement (in addition to `sub` scope).
     # The scope value can be a string, or a list of strings.
